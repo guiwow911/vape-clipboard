@@ -103,7 +103,7 @@
 只需要 **Windows + Python 3**（用系统自带的 .NET Framework 编译器，不用装 Visual Studio）。
 
 ```bash
-git clone https://github.com/<your-name>/vape-clipboard.git
+git clone https://github.com/guiwow911/vape-clipboard.git
 cd vape-clipboard
 python tools/build_single.py
 ```
