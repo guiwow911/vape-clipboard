@@ -1,0 +1,29 @@
+# 构建产物
+dist/
+*.exe
+*.old
+*.old[0-9]
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+*.user
+*.suo
+
+# 运行时数据（剪贴板内容、日志等，绝不应提交）
+clips.json
+clips.json.tmp
+hotkey.txt
+log.txt
+runtime/
+
+# 系统
+Thumbs.db
+desktop.ini
+.DS_Store
