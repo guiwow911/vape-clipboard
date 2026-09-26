@@ -18,6 +18,14 @@ import shutil
 import hashlib
 import subprocess
 
+# Windows 控制台 / CI 上默认编码可能不是 UTF-8（CI 常为 cp1252），
+# 直接 print 中文会抛 UnicodeEncodeError，这里强制切到 UTF-8。
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 ROOT   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC    = os.path.join(ROOT, "src")
 WEB    = os.path.join(SRC, "web")
@@ -95,7 +103,7 @@ def main():
         args.append("/resource:%s,%s" % (path, name))
     args.append(cs)
 
-    r = subprocess.run(args, capture_output=True, text=True)
+    r = subprocess.run(args, capture_output=True, text=True, errors="replace")
     if r.returncode != 0:
         print("编译失败：")
         print(r.stdout or "", r.stderr or "")

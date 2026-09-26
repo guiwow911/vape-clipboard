@@ -23,6 +23,9 @@ jobs:
           python-version: '3.x'
 
       - name: Build single-file exe
+        env:
+          PYTHONUTF8: '1'
+          PYTHONIOENCODING: 'utf-8'
         run: python tools/build_single.py
 
       - name: Show artifact
