@@ -1,0 +1,30 @@
+# Build output
+*.exe
+*.dll
+bin/
+obj/
+
+# Data files
+clips.json
+hotkey.txt
+log.txt
+*.ico
+
+# Runtime cache
+runtime/
+WebView2/
+
+# IDE
+.vs/
+.vscode/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Screenshots (not needed in repo)
+*.png
+!src/assets/*.png
+!src/assets/*.jpg
