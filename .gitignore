@@ -1,4 +1,4 @@
-# Build output
+﻿# Build output
 *.exe
 *.dll
 bin/
@@ -9,22 +9,34 @@ clips.json
 hotkey.txt
 log.txt
 *.ico
-
 # Runtime cache
 runtime/
 WebView2/
-
 # IDE
 .vs/
 .vscode/
 *.suo
 *.user
-
 # OS
 .DS_Store
 Thumbs.db
-
 # Screenshots (not needed in repo)
 *.png
 !src/assets/*.png
 !src/assets/*.jpg
+# ===== merged from local source pack =====
+# 构建产物
+dist/
+*.old
+*.old[0-9]
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+# 编辑器 / IDE
+.idea/
+# 运行时数据（剪贴板内容、日志等，绝不应提交）
+clips.json.tmp
+# 系统
+desktop.ini

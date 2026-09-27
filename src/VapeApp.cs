@@ -105,7 +105,7 @@ class VapeApp : Form
     static extern bool SetDllDirectory(string lpPathName);
 
     /* ---------------- 单文件打包：把内核 DLL 与网页资源都塞进 exe ---------------- */
-    const string BUILD = "5c8a7fcb23";        // 改界面时改这个，运行时会重新解包
+    const string BUILD = "428ebcb967";        // 改界面时改这个，运行时会重新解包
     static readonly string[] WEB_FILES = {
         "index.html", "style.css", "app.js",
         "assets/app.ico", "assets/bg.jpg", "assets/donate.jpg", "assets/logo.png"
@@ -113,10 +113,28 @@ class VapeApp : Form
 
     static string RuntimeDir { get { return Path.Combine(DataDir, "runtime", BUILD); } }
 
-    string Build(string f)
+    static byte[] ReadResource(string id)
     {
-        return File.ReadAllText(Path.Combine(AppDir, "src", "web", f), System.Text.Encoding.UTF8);
+        try
+        {
+            using (Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream(id))
+            {
+                if (s == null) return null;
+                byte[] buf = new byte[s.Length];
+                int read = 0;
+                while (read < buf.Length)
+                {
+                    int n = s.Read(buf, read, buf.Length - read);
+                    if (n <= 0) break;
+                    read += n;
+                }
+                return buf;
+            }
+        }
+        catch (Exception) { return null; }
     }
+
+    static string ResName(string file) { return "web_" + file.Replace('/', '_').Replace('\\', '_'); }
 
     /* 解包网页资源，返回可以挂给虚拟域名的目录；没有内嵌资源就返回 exe 所在目录 */
     static string PrepareWeb()

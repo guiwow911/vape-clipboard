@@ -1,0 +1,48 @@
+name: build-release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Build single-file exe
+        env:
+          PYTHONUTF8: '1'
+          PYTHONIOENCODING: 'utf-8'
+        run: python tools/build_single.py
+
+      - name: Show artifact
+        shell: pwsh
+        run: Get-ChildItem dist | Format-Table Name, Length
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VapeV4Clipboard
+          path: dist/*
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/VapeV4Clipboard.exe
+            dist/SHA256SUMS.txt
+          generate_release_notes: true
